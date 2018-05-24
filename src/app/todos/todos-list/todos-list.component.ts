@@ -14,6 +14,8 @@ export class TodosListComponent {
   ];
 
   addNewTodo(todo: string) {
-    this.todos.push(todo);
+    if (todo && todo.trim() !== '') {
+      this.todos.push(todo);
+    }
   }
 }

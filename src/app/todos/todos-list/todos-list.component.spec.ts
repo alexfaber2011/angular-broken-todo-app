@@ -54,4 +54,29 @@ describe('TodosListComponent', () => {
       'Test TODO'
     ]);
   }));
+
+  it('should not add a blank todo', async(() => {
+    component.addNewTodo('');
+
+    fixture.detectChanges();
+
+    const listItems = fixture.debugElement.queryAll(By.css('mat-list-item'))
+      .map(listItem => listItem.nativeElement.innerText.trim());
+
+    expect(listItems).toEqual([
+      'Buy bread',
+      'Learn Angular 6',
+      'Read about Ivy',
+      'Pick up the kids',
+    ]);
+  }));
+
+  it('the "add" button should be disabled when the input is blank', async(() => {
+    const input = fixture.debugElement.query(By.css('input'));
+    const button = fixture.debugElement.query(By.css('button'));
+    expect(button.nativeElement.disabled).toBe(true);
+    input.nativeElement.value = 'foo';
+    fixture.detectChanges();
+    expect(button.nativeElement.disabled).toBe(false);
+  }));
 });

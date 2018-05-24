@@ -6,7 +6,7 @@
              (keyup.enter)="addNewTodo(todoInput.value)"
              placeholder="What's on your todo list?">
     </mat-form-field>
-    <button mat-mini-fab (click)="addNewTodo(todoInput.value)">
+    <button mat-mini-fab (click)="addNewTodo(todoInput.value)" [disabled]="todoInput.value.trim() === ''">
       <i class="material-icons">add</i>
     </button>
   </div>
