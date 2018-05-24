@@ -1,4 +1,5 @@
 import {Component} from '@angular/core';
+import {FormControl, FormGroup, Validators} from '@angular/forms';
 
 @Component({
   selector: 'app-todos-list',
@@ -13,9 +14,19 @@ export class TodosListComponent {
     'Pick up the kids'
   ];
 
+  todoForm = new FormGroup({
+    todo: new FormControl('',
+      [Validators.required, Validators.minLength(3), Validators.maxLength(64)]),
+  });
+
+
   addNewTodo(todo: string) {
     if (todo && todo.trim() !== '') {
       this.todos.push(todo);
     }
+  }
+
+  onSubmit(v) {
+    console.log('v: ', v);
   }
 }

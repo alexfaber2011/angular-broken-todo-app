@@ -1,14 +1,17 @@
 <mat-card class="todo-card">
   <div class="todo-input-wrapper">
-    <mat-form-field class="field">
-      <input #todoInput
-             matInput
-             (keyup.enter)="addNewTodo(todoInput.value)"
-             placeholder="What's on your todo list?">
-    </mat-form-field>
-    <button mat-mini-fab (click)="addNewTodo(todoInput.value)" [disabled]="todoInput.value.trim() === ''">
-      <i class="material-icons">add</i>
-    </button>
+    <form [formGroup]="todoForm" (ngSubmit)="addNewTodo(todoForm.value.todo)">
+      <mat-form-field class="field">
+        <input name="todo"
+               matInput
+               placeholder="What's on your todo list?"
+               formControlName="todo">
+      </mat-form-field>
+      <button mat-mini-fab type="submit" [disabled]="todoForm.invalid">
+        <i class="material-icons">add</i>
+      </button>
+    </form>
+    {{ todoForm.status }}
   </div>
   <mat-list>
     <mat-list-item *ngFor="let todo of todos">

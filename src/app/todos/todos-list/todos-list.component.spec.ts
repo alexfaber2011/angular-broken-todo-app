@@ -4,6 +4,7 @@ import {TodosListComponent} from './todos-list.component';
 import {By} from '@angular/platform-browser';
 import {MaterialModule} from '../../material.module';
 import {BrowserAnimationsModule} from '@angular/platform-browser/animations';
+import {ReactiveFormsModule} from "@angular/forms";
 
 describe('TodosListComponent', () => {
   let component: TodosListComponent;
@@ -11,7 +12,7 @@ describe('TodosListComponent', () => {
 
   beforeEach(async(() =>
     TestBed.configureTestingModule({
-      imports: [BrowserAnimationsModule, MaterialModule],
+      imports: [BrowserAnimationsModule, MaterialModule, ReactiveFormsModule],
       declarations: [TodosListComponent]
     }).compileComponents()
   ));
@@ -72,11 +73,26 @@ describe('TodosListComponent', () => {
   }));
 
   it('the "add" button should be disabled when the input is blank', async(() => {
-    const input = fixture.debugElement.query(By.css('input'));
     const button = fixture.debugElement.query(By.css('button'));
     expect(button.nativeElement.disabled).toBe(true);
-    input.nativeElement.value = 'foo';
+    component.todoForm.setValue({todo: 'foo'});
     fixture.detectChanges();
     expect(button.nativeElement.disabled).toBe(false);
+  }));
+
+  it('should disable the "add" button when the input is less than 3 characters', async(() => {
+    const button = fixture.debugElement.query(By.css('button'));
+    expect(button.nativeElement.disabled).toBe(true);
+    component.todoForm.setValue({todo: 'fo'});
+    fixture.detectChanges();
+    expect(button.nativeElement.disabled).toBe(true);
+  }));
+
+  it('should disable the "add" button when the input is more than 64 characters', async(() => {
+    const button = fixture.debugElement.query(By.css('button'));
+    expect(button.nativeElement.disabled).toBe(true);
+    component.todoForm.setValue({todo: 'as;dlkfjasdl;kfjas;dlkfjas;dlkfjas;dlkfjas;ldkfjasl;dkjfas;ldkfja;sldkfj;asldkjfa;sldkfjsdkalsjdf'});
+    fixture.detectChanges();
+    expect(button.nativeElement.disabled).toBe(true);
   }));
 });
