@@ -1,3 +1,6 @@
 <p>
-  statistics-list works!
+  Total: {{todosService.totalNumberOfTodos$ | async}}<br />
+  Completed: {{todosService.numberOfCompletedTodos$ | async}}<br />
+  Incomplete: {{todosService.numberOfIncompleteTodos$ | async}}<br />
+  Deleted: {{todosService.numberOfDeletedTodos$| async}}<br />
 </p>

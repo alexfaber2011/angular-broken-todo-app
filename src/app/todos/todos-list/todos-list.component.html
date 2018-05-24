@@ -1,6 +1,6 @@
 <mat-card class="todo-card">
   <div class="todo-input-wrapper">
-    <form [formGroup]="todoForm" (ngSubmit)="addNewTodo(todoForm.value.todo)">
+    <form [formGroup]="todoForm" (ngSubmit)="todosService.addNewTodo(todoForm.value.todo)">
       <mat-form-field class="field">
         <input name="todo"
                matInput
@@ -13,12 +13,12 @@
     </form>
   </div>
   <mat-list>
-    <mat-list-item *ngFor="let todo of todos">
-      <mat-checkbox color='primary'>
-        {{todo}}
+    <mat-list-item *ngFor="let todo of todosService.nonDeletedTodos$ | async">
+      <mat-checkbox color='primary' [checked]="todo.isCompleted" (click)="todosService.toggleTodoCompletion(todo)">
+        {{todo.value}}
       </mat-checkbox>
       <button mat-icon-button class="delete-button">
-        <mat-icon aria-label="Delete a todo" (click)="removeTodo(todo)">delete</mat-icon>
+        <mat-icon aria-label="Delete a todo" (click)="todosService.toggleTodoDeletion(todo)">delete</mat-icon>
       </button>
     </mat-list-item>
   </mat-list>
