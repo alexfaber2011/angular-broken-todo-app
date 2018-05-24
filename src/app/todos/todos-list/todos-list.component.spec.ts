@@ -28,7 +28,7 @@ describe('TodosListComponent', () => {
   });
 
   it('should render a list item for each default todo', async(() => {
-    const listItems = fixture.debugElement.queryAll(By.css('mat-list-item'))
+    const listItems = fixture.debugElement.queryAll(By.css('mat-list-item .mat-checkbox-label'))
       .map(listItem => listItem.nativeElement.innerText.trim());
 
     expect(listItems).toEqual([
@@ -44,7 +44,7 @@ describe('TodosListComponent', () => {
 
     fixture.detectChanges();
 
-    const listItems = fixture.debugElement.queryAll(By.css('mat-list-item'))
+    const listItems = fixture.debugElement.queryAll(By.css('mat-list-item .mat-checkbox-label'))
       .map(listItem => listItem.nativeElement.innerText.trim());
 
     expect(listItems).toEqual([
@@ -61,7 +61,7 @@ describe('TodosListComponent', () => {
 
     fixture.detectChanges();
 
-    const listItems = fixture.debugElement.queryAll(By.css('mat-list-item'))
+    const listItems = fixture.debugElement.queryAll(By.css('mat-list-item .mat-checkbox-label'))
       .map(listItem => listItem.nativeElement.innerText.trim());
 
     expect(listItems).toEqual([
@@ -94,5 +94,28 @@ describe('TodosListComponent', () => {
     component.todoForm.setValue({todo: 'as;dlkfjasdl;kfjas;dlkfjas;dlkfjas;dlkfjas;ldkfjasl;dkjfas;ldkfja;sldkfj;asldkjfa;sldkfjsdkalsjdf'});
     fixture.detectChanges();
     expect(button.nativeElement.disabled).toBe(true);
+  }));
+
+  it('removeTodo should remove a todo', async(() => {
+    component.removeTodo('Learn Angular 6');
+    expect(component.todos).toEqual([
+      'Buy bread',
+      'Read about Ivy',
+      'Pick up the kids',
+    ]);
+  }));
+
+  it('should remove a todo if the delete button is clicked', async(() => {
+    const button = fixture.debugElement.query(By.css('mat-icon'));
+    button.nativeElement.click();
+    fixture.detectChanges();
+    const listItems = fixture.debugElement.queryAll(By.css('mat-list-item .mat-checkbox-label'))
+      .map(listItem => listItem.nativeElement.innerText.trim());
+
+    expect(listItems).toEqual([
+      'Learn Angular 6',
+      'Read about Ivy',
+      'Pick up the kids',
+    ]);
   }));
 });

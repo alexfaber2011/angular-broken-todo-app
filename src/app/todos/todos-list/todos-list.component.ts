@@ -26,7 +26,7 @@ export class TodosListComponent {
     }
   }
 
-  onSubmit(v) {
-    console.log('v: ', v);
+  removeTodo(todo: string) {
+    this.todos = this.todos.filter(t => t !== todo);
   }
 }
